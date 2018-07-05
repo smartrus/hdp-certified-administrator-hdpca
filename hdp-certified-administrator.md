@@ -40,14 +40,51 @@ Candidates are also encouraged to attempt the practice exam:
 
 ### Installation
 
-Configure a local HDP repository
+* Configure a local HDP repository
 
-Install ambari-server and ambari-agent
+```
+wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
 
-Install HDP using the Ambari install wizard
+wget -nv http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
 
-Add a new node to an existing cluster
+yum-config-manager --add-repo http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7
+```
 
-Decommission a node
+* Install ambari-server and ambari-agent
 
-Add an HDP service to a cluster using Ambari
+```
+yum install ambari-server
+
+vi /etc/python/cert-verification.cfg
+[https]
+verify=disable
+
+ambari-server setup
+ambari-server start
+```
+
+```
+yum install ambari-agent
+
+vi /etc/ambari-agent/conf/ambari-agent.ini
+[server]
+hostname=<your.ambari.server.hostname>
+url_port=8440
+secured_url_port=8441
+
+vi /etc/python/cert-verification.cfg
+[https]
+verify=disable
+
+ambari-agent start
+```
+
+* Install HDP using the Ambari install wizard
+
+
+
+* Add a new node to an existing cluster
+
+* Decommission a node
+
+* Add an HDP service to a cluster using Ambari
