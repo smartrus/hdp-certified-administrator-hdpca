@@ -43,6 +43,68 @@ Candidates are also encouraged to attempt the practice exam:
 * Configure a local HDP repository
 
 ```
+yum install httpd
+vi /etc/httpd/conf/httpd.conf
+  ServerName ip-172-31-89-188.ec2.internal:80
+
+  NameVirtualHost ip-172-31-89-188.ec2.internal:80
+
+  <VirtualHost ip-172-31-89-188.ec2.internal:80>
+          ServerAdmin webmaster@ip-172-31-89-188.ec2.internal
+          DocumentRoot /var/www/ip-172-31-89-188.ec2.internal
+          ServerName ip-172-31-89-188.ec2.internal
+          ErrorLog logs/ip-172-31-89-188.ec2.internal-error_log
+          CustomLog logs/ip-172-31-89-188.ec2.internal-access_log common
+  </VirtualHost>
+
+mkdir -p /var/www/ip-172-31-89-188.ec2.internal/yum
+service httpd start
+
+wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+wget -nv http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
+wget -nv http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7 -O /etc/yum.repos.d/hdp-utils.repo
+
+cd /var/www/ip-172-31-89-188.ec2.internal/yum
+nohup wget http://public-repo-1.hortonworks.com/ambari/centos7/ambari-2.1.0-centos7.tar.gz &
+nohup wget http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/HDP-2.3.0.0-centos7-rpm.tar.gz &
+nohup wget http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7/HDP-UTILS-1.1.0.20-centos7.tar.gz &
+
+nohup tar xzf ambari-2.1.0-centos7.tar.gz
+nohup tar xzf HDP-2.3.0.0-centos7-rpm.tar.gz
+nohup tar xzf HDP-UTILS-1.1.0.20-centos7.tar.gz
+
+# Change .repo urls to your localhost url
+
+# Copy /etc/hosts and repo files to each cluster instance
+
+scp /etc/yum.repos.d/ambari.repo ip-172-31-87-208.ec2.internal:~
+scp /etc/yum.repos.d/hdp.repo ip-172-31-87-208.ec2.internal:~
+ssh -tt centos@ip-172-31-87-208.ec2.internal "sudo mv ~/*.repo /etc/yum.repos.d/"
+
+scp /etc/yum.repos.d/ambari.repo ip-172-31-89-46.ec2.internal:~
+scp /etc/yum.repos.d/hdp.repo ip-172-31-89-46.ec2.internal:~
+ssh -tt centos@ip-172-31-89-46.ec2.internal "sudo mv ~/*.repo /etc/yum.repos.d/"
+
+scp /etc/yum.repos.d/ambari.repo ip-172-31-93-133.ec2.internal:~
+scp /etc/yum.repos.d/hdp.repo ip-172-31-93-133.ec2.internal:~
+ssh -tt centos@ip-172-31-93-133.ec2.internal "sudo mv ~/*.repo /etc/yum.repos.d/"
+
+scp /etc/yum.repos.d/ambari.repo ip-172-31-93-34.ec2.internal:~
+scp /etc/yum.repos.d/hdp.repo ip-172-31-93-34.ec2.internal:~
+ssh -tt centos@ip-172-31-93-34.ec2.internal "sudo mv ~/*.repo /etc/yum.repos.d/"
+
+scp /etc/yum.repos.d/ambari.repo ip-172-31-84-208.ec2.internal:~
+scp /etc/yum.repos.d/hdp.repo ip-172-31-84-208.ec2.internal:~
+ssh -tt centos@ip-172-31-84-208.ec2.internal "sudo mv ~/*.repo /etc/yum.repos.d/"
+
+```
+
+Change .repo urls to your localhost url
+
+
+Configuring remote HDP repository:
+
+```
 wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
 
 wget -nv http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
