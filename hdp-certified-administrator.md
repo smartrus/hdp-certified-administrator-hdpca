@@ -71,9 +71,9 @@ nohup wget http://public-repo-1.hortonworks.com/ambari/centos7/ambari-2.1.0-cent
 nohup wget http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/HDP-2.3.0.0-centos7-rpm.tar.gz &
 nohup wget http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7/HDP-UTILS-1.1.0.20-centos7.tar.gz &
 
-nohup tar xzf ambari-2.1.0-centos7.tar.gz
-nohup tar xzf HDP-2.3.0.0-centos7-rpm.tar.gz
-nohup tar xzf HDP-UTILS-1.1.0.20-centos7.tar.gz
+nohup tar xzf ambari-2.1.0-centos7.tar.gz &
+nohup tar xzf HDP-2.3.0.0-centos7-rpm.tar.gz &
+nohup tar xzf HDP-UTILS-1.1.0.20-centos7.tar.gz &
 
 # Change .repo urls to your localhost url
 
