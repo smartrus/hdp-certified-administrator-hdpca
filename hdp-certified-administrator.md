@@ -59,6 +59,7 @@ vi /etc/httpd/conf/httpd.conf
 
 mkdir -p /var/www/ip-172-31-89-188.ec2.internal/yum
 service httpd start
+systemctl enable httpd
 
 wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
 wget -nv http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
@@ -98,8 +99,6 @@ scp /etc/yum.repos.d/hdp.repo ip-172-31-84-208.ec2.internal:~
 ssh -tt centos@ip-172-31-84-208.ec2.internal "sudo mv ~/*.repo /etc/yum.repos.d/"
 
 ```
-
-Change .repo urls to your localhost url
 
 
 Configuring remote HDP repository:
