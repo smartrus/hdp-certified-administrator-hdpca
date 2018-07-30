@@ -65,7 +65,6 @@ yum install wget -y
 
 wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
 wget -nv http://public-repo-1.hortonworks.com/HDP/centos7/2.x/updates/2.3.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
-wget -nv http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos7 -O /etc/yum.repos.d/hdp-utils.repo
 
 cd /var/www/ip-172-31-89-188.ec2.internal/yum
 nohup wget http://public-repo-1.hortonworks.com/ambari/centos7/ambari-2.1.0-centos7.tar.gz &
