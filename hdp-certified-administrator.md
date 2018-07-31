@@ -208,3 +208,9 @@ Enabling log aggregation
   <value>3600</value>
 </property>       
 ```
+
+* Configure and manage alerts
+
+```
+cd /var/lib/ambari-server/resources/host_scripts
+```
