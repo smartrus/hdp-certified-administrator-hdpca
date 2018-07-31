@@ -162,3 +162,13 @@ hadoop fs -chown centos:hdfs /user/centos
 hadoop fs -ls /user
 hadoop fs -put testing /user/centos
  ```
+
+* Configure the include and exclude DataNode files
+
+```
+sudo su - hdfs
+cd /etc/hadoop/conf
+vi dfs.exclude
+vi dfs.include
+hdfs dfsadmin -refreshNodes
+```
