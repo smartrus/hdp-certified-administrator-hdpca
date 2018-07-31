@@ -172,3 +172,39 @@ vi dfs.exclude
 vi dfs.include
 hdfs dfsadmin -refreshNodes
 ```
+
+* View an application’s log file
+
+```
+yarn application -list all
+sudo find / -name "*hadoop*examples*.jar"
+hadoop jar /usr/hdp/2.3.0.0-2557/hadoop-mapreduce/hadoop-mapreduce-examples.jar randomwriter /user/centos/randomwriter
+```
+Go to http://hostname:8088 (8042) and look at the web UI
+
+The following environment files define the log location for YARN and MRv2 for the daemons.
+
+yarn-env.sh:export YARN_LOG_DIR=/var/log/hadoop-yarn/$USER
+
+hadoop-env.sh:export HADOOP_LOG_DIR=/var/log/hadoop-mapred/$USER
+
+```
+cd /var/log/hadoop-yarn/yarn
+ls -ltr
+
+yarn logs -applicationId application_1383601692319_0008
+```
+
+Enabling log aggregation
+
+```
+<property>
+  <name>yarn.log-aggregation-enable</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.log-aggregation.roll-monitoring-interval-seconds</name>
+  <value>3600</value>
+</property>       
+```
