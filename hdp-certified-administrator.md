@@ -143,10 +143,22 @@ ambari-agent start
 
 * Install HDP using the Ambari install wizard
 
-
-
 * Add a new node to an existing cluster
 
 * Decommission a node
 
 * Add an HDP service to a cluster using Ambari
+
+### Configuration
+
+* Create a home directory for a user and configure permissions
+
+```
+sudo su - hdfs
+hadoop fs -ls /user
+hadoop fs -mkdir /user/centos
+hadoop fs -ls /user
+hadoop fs -chown centos:hdfs /user/centos
+hadoop fs -ls /user
+hadoop fs -put testing /user/centos
+ ```
