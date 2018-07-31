@@ -1,0 +1,6 @@
+ip-172-31-86-200.ec2.internal
+ip-172-31-85-146.ec2.internal
+ip-172-31-93-249.ec2.internal
+ip-172-31-83-50.ec2.internal
+ip-172-31-84-90.ec2.internal
+ip-172-31-88-138.ec2.internal
