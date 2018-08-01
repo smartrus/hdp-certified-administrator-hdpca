@@ -237,3 +237,17 @@ hdfs snapshotDiff /sourcedir .snapshot/snapshotdir1 .snapshot/snapshotdir2
 ```
 hadoop fs -cp /user/centos/snapshotdemo/.snapshot/snapshotname /user/centos/snapshotdemo
 ```
+
+### Security
+
+* Configure HDFS ACLs
+
+```
+hadoop fs -ls /user
+sudo -u hdfs hadoop fs -mkdir /user/rustem
+sudo -u hdfs hadoop fs -chown rustem:rustem /user/rustem
+sudo su - rustem
+hadoop fs -mkdir /user/rustem/aclsdemo
+hadoop fs -ls /user/rustem
+
+```
