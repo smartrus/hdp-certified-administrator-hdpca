@@ -214,3 +214,26 @@ Enabling log aggregation
 ```
 cd /var/lib/ambari-server/resources/host_scripts
 ```
+
+### High Availability
+
+* Copy data between two clusters using distcp
+
+```
+
+```
+
+* Create a snapshot of an HDFS directory
+
+```
+hdfs dfsadmin -allowSnapshot /user/centos/snapshotdemo
+hadoop fs -createSnapshot /user/centos/snapshotdemo
+sudo -u hdfs hdfs lsSnapshottableDir
+hdfs snapshotDiff /sourcedir .snapshot/snapshotdir1 .snapshot/snapshotdir2
+```
+
+* Recover a snapshot
+
+```
+hadoop fs -cp /user/centos/snapshotdemo/.snapshot/snapshotname /user/centos/snapshotdemo
+```
