@@ -153,9 +153,36 @@ ambari-agent start
 
 * Define and deploy a rack topology script
 
+ssh to Namenode create two files rack_topology.sh, rack_topology.data in /etc/hadoop/conf and edit the core-site.xml file to add the following property to it:
+
+```
+<property>
+  <name>net.topology.script.file.name</name>
+  <value>/etc/hadoop/conf/rack-topology.sh</value>
+</property>
+
+# to check run
+sudo -u hdfs hadoop dfsadmin -report
+```
+
 * Change the configuration of a service using Ambari
 
 * Configure the Capacity Scheduler
+
+To enable the Capacity Scheduler, set the following property in the /etc/hadoop/conf/yarn-site.xml file on the ResourceManager host:
+
+```
+<property>
+ <name>yarn.resourcemanager.scheduler.class</name>
+ <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler</value>
+</property>
+```
+
+The settings for the Capacity Scheduler are contained in the /etc/hadoop/conf/capacity-scheduler.xml file on the ResourceManager host.
+
+```
+yarn rmadmin -refreshQueues
+```
 
 * Create a home directory for a user and configure permissions
 
@@ -183,6 +210,10 @@ hdfs dfsadmin -refreshNodes
 
 * Restart an HDP service
 
+Use Services to monitor and manage selected services running in your Hadoop cluster.
+
+To start or stop all listed services at once, select Actions, then choose Start All or Stop All
+
 * View an application’s log file
 
 ```
@@ -205,7 +236,7 @@ ls -ltr
 yarn logs -applicationId application_1383601692319_0008
 ```
 
-Enabling log aggregation
+Enabling log aggregation in yarn-site.xml
 
 ```
 <property>
@@ -227,6 +258,23 @@ cd /var/lib/ambari-server/resources/host_scripts
 
 * Troubleshoot a failed job
 
+```
+yarn application -list
+hadoop queue -list
+hadoop queue -showacls
+
+yarn application  -kill  <application_id>
+hadoop job -kill-task <task-id>
+hadoop job -fail-task <task-id>
+hadoop job -list-attempt-ids <job-id> <task-type> <task-state>
+```
+
+Look at the job details in the Resource Manager  UI.
+
+Use the UI to navigate to the job attempt.
+
+Look at the log file for the failed attempt.
+
 ### High Availability
 
 * Configure NameNode HA
@@ -236,7 +284,16 @@ cd /var/lib/ambari-server/resources/host_scripts
 * Copy data between two clusters using distcp
 
 ```
+hadoop distcp hdfs://nn1:8020/source hdfs://nn2:8020/destination
+hadoop distcp hdfs://nn1:8020/source/a hdfs://nn1:8020/source/b hdfs:// nn2:8020/destination
+```
 
+The DistCp -update option is used to copy files from a source that do not exist at the target, or that have different contents. The DistCp -overwrite option overwrites target files even if they exist at the source, or if they have the same contents.
+
+The -update and -overwrite options warrant further discussion, since their handling of source-paths varies from the defaults in a very subtle manner.
+
+```
+distcp -update hdfs://nn1:8020/source/first hdfs://nn1:8020/source/second hdfs://nn2:8020/target
 ```
 
 * Create a snapshot of an HDFS directory
@@ -264,7 +321,25 @@ hadoop fs -cp /user/centos/snapshotdemo/.snapshot/snapshotname /user/centos/snap
 
 * Configure HDFS ACLs
 
+Only one property needs to be specified in the hdfs-site.xml file in order to enable ACLs on HDFS:
+
 ```
+<property>
+ <name>dfs.namenode.acls.enabled</name>
+ <value>true</value>
+</property>
+
+hdfs dfs -setfacl -m user:hadoop:rw- /file
+hdfs dfs -setfacl -x user:hadoop /file
+hdfs dfs -setfacl -b /file
+hdfs dfs -setfacl -k /dir
+hdfs dfs -setfacl --set user::rw-,user:hadoop:rw-,group::r--,other::r-- /file
+hdfs dfs -setfacl -R -m user:hadoop:r-x /dir
+hdfs dfs -setfacl -m default:user:hadoop:r-x /dir
+
+hdfs dfs -getfacl /file
+hdfs dfs -getfacl -R /dir
+
 hadoop fs -ls /user
 sudo -u hdfs hadoop fs -mkdir /user/rustem
 sudo -u hdfs hadoop fs -chown rustem:rustem /user/rustem
