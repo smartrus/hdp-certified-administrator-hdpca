@@ -151,6 +151,12 @@ ambari-agent start
 
 ### Configuration
 
+* Define and deploy a rack topology script
+
+* Change the configuration of a service using Ambari
+
+* Configure the Capacity Scheduler
+
 * Create a home directory for a user and configure permissions
 
 ```
@@ -172,6 +178,10 @@ vi dfs.exclude
 vi dfs.include
 hdfs dfsadmin -refreshNodes
 ```
+
+### Troubleshooting
+
+* Restart an HDP service
 
 * View an application’s log file
 
@@ -215,7 +225,13 @@ Enabling log aggregation
 cd /var/lib/ambari-server/resources/host_scripts
 ```
 
+* Troubleshoot a failed job
+
 ### High Availability
+
+* Configure NameNode HA
+
+* Configure ResourceManager HA
 
 * Copy data between two clusters using distcp
 
@@ -238,7 +254,13 @@ hdfs snapshotDiff /sourcedir .snapshot/snapshotdir1 .snapshot/snapshotdir2
 hadoop fs -cp /user/centos/snapshotdemo/.snapshot/snapshotname /user/centos/snapshotdemo
 ```
 
+* Configure HiveServer2 HA
+
 ### Security
+
+* Install and configure Knox
+
+* Install and configure Ranger
 
 * Configure HDFS ACLs
 
